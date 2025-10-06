@@ -150,7 +150,7 @@
       document.addEventListener('keydown', function(e) {
         // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (DevTools)
         if (
-          e.key === 'F12' || 
+          // e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
             (e.ctrlKey && e.key === 'u') || // View Source
             (e.ctrlKey && e.key === 's')) { 
