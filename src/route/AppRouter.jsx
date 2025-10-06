@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import AboutPage from "../pages/AboutPage/AboutPage";
 import Gallery from "../pages/Gallery/Gallery";
+import Commisson from "../pages/CommissionPage/CommissionPage";
 
 const AppRouter = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const AppRouter = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/gallery" element={<Gallery />} />
+      <Route path="/commission" element={<Commisson />} />
     </Routes>
   );
 };
