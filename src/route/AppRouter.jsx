@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import AboutPage from "../pages/AboutPage/AboutPage";
 import Gallery from "../pages/Gallery/Gallery";
 import Commisson from "../pages/CommissionPage/CommissionPage";
+import ContactPage from "../pages/ContactPage/ContactPage";
 
 const AppRouter = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const AppRouter = () => {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/gallery" element={<Gallery />} />
       <Route path="/commission" element={<Commisson />} />
+      <Route path="/contact" element={<ContactPage />} />
     </Routes>
   );
 };
