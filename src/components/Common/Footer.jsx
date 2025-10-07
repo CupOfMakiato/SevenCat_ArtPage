@@ -20,16 +20,16 @@ const Footer = () => {
     <footer className="bg-white border-t border-gray-200 mt-20">
       <div className="container mx-auto px-6 py-12">
         {/* Main Footer Content */}
-        <div className="flex flex-row justify-between space-y-8">
+        <div className="flex flex-row justify-between items-center">
           {/* Copyright and Credits */}
-          <div className="text-center space-y-2">
-            <p className="text-gray-500 text-sm">
+          <div className="flex text-center">
+            <p className="text-window-500 text-2xlsm">
               © {new Date().getFullYear()} Developed by{" "}
               <a
                 href="https://github.com/CupOfMakiato"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-900 transition-colors duration-300 font-medium"
+                className="hover:text-[#FE5359] text-2xlsm hover:scale-110 transition-all duration-300 font-medium"
               >
                 {" "}
                 Makiato
@@ -45,7 +45,7 @@ const Footer = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-4xl text-gray-600 hover:text-gray-900 transition-colors duration-300"
+                className="text-5xl text-window-500 hover:text-[#FE5359] hover:scale-110 transition-all duration-300"
                 aria-label={social.name}
               >
                 {social.icon}

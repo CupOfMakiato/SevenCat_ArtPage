@@ -19,15 +19,15 @@ const Gallery = () => {
         setLoading(true);
 
         const lists = await viewAllListsByBoardId();
-        
-        const galleryList = lists.find(list => 
-          list.name.toLowerCase().includes('gallery')
+
+        const galleryList = lists.find((list) =>
+          list.name.toLowerCase().includes("gallery")
         );
-        
+
         if (!galleryList) {
-          throw new Error('Gallery list not found');
+          throw new Error("Gallery list not found");
         }
-        
+
         const cards = await viewAllCardsByListId(galleryList.id);
 
         const portfolioData = await Promise.all(
@@ -90,14 +90,14 @@ const Gallery = () => {
 
     // Disable specific keyboard shortcuts
     const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.key === 's') {
+      if (e.ctrlKey && e.key === "s") {
         e.preventDefault();
         return false;
       }
       if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-        (e.ctrlKey && e.key === 'u')
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+        (e.ctrlKey && e.key === "u")
       ) {
         e.preventDefault();
         return false;
@@ -156,16 +156,16 @@ const Gallery = () => {
                       onDragStart={handleDragStart}
                       onContextMenu={(e) => e.preventDefault()}
                       style={{
-                        userSelect: 'none',
-                        WebkitUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none',
-                        WebkitTouchCallout: 'none',
-                        WebkitUserDrag: 'none',
+                        userSelect: "none",
+                        WebkitUserSelect: "none",
+                        MozUserSelect: "none",
+                        msUserSelect: "none",
+                        WebkitTouchCallout: "none",
+                        WebkitUserDrag: "none",
                       }}
                     />
                     {/* Transparent overlay */}
-                    <div 
+                    <div
                       className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"
                       onContextMenu={(e) => e.preventDefault()}
                     />
@@ -174,6 +174,28 @@ const Gallery = () => {
               ))}
             </div>
           )}
+          {/* <div className="flex flex-row justify-between space-y-8">
+            <p className="text-window-500">
+              See more on{" "}
+              <a
+                className="hover:text-gray-900 transition-colors duration-300 font-medium"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://x.com/SevenCat13"
+              >
+                Twitter
+              </a>
+              ,{" "}
+              <a
+                className="hover:text-gray-900 transition-colors duration-300 font-medium"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.facebook.com/7Cattoo"
+              >
+                Facebook
+              </a>
+            </p>
+          </div> */}
         </main>
 
         {/* Lightbox Modal */}
@@ -184,7 +206,7 @@ const Gallery = () => {
             onContextMenu={(e) => e.preventDefault()}
           >
             <button
-              className="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 transition-colors z-10"
+              className="absolute top-6 right-6 rounded-lg border border-transparent px-5 py-2.5 text-base font-medium font-inherit bg-[#141414] cursor-pointer transition-colors duration-[250ms]"
               onClick={closeLightbox}
               aria-label="Close"
             >
@@ -203,15 +225,15 @@ const Gallery = () => {
                 onDragStart={handleDragStart}
                 onContextMenu={(e) => e.preventDefault()}
                 style={{
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                  MozUserSelect: 'none',
-                  msUserSelect: 'none',
-                  WebkitTouchCallout: 'none',
-                  WebkitUserDrag: 'none',
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  msUserSelect: "none",
+                  WebkitTouchCallout: "none",
+                  WebkitUserDrag: "none",
                 }}
               />
-              <div 
+              <div
                 className="absolute inset-0 pointer-events-none"
                 onContextMenu={(e) => e.preventDefault()}
               />
