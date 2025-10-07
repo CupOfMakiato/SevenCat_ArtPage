@@ -6,12 +6,12 @@ const Footer = () => {
   const socialLinks = [
     {
       name: "FaceBook",
-      url: "https://facebook.com",
+      url: "https://www.facebook.com/7Cattoo",
       icon: <FaFacebookSquare />,
     },
     {
       name: "Twitter",
-      url: "https://twitter.com",
+      url: "https://x.com/SevenCat13",
       icon: <BsTwitterX />,
     },
   ];
