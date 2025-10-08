@@ -8,6 +8,7 @@ import {
   viewCardAttachments,
   viewCardById,
 } from "../../api/trello-api";
+import TrelloMarkdownRenderer from "../../utils/TrelloMarkdownRenderer";
 
 const HomePage = () => {
   const [profileData, setProfileData] = useState(null);
@@ -37,6 +38,7 @@ const HomePage = () => {
 
         const profileCard = cards[0]; //first card
         const profileCardDesc = cards[1];
+        const profileCardBio =cards[2];
 
         // Check if cards exist before accessing their properties
         if (!profileCard) {
@@ -48,9 +50,14 @@ const HomePage = () => {
         // Only fetch name and description if cards exist
         let cardName = null;
         let cardDesc = null;
+        let cardBio = null;
 
         if (profileCardDesc) {
           cardDesc = await viewCardById(profileCardDesc.id);
+        }
+
+        if (profileCardBio) {
+          cardBio = await viewCardById(profileCardBio.id);
         }
 
         const profileImage = attachments.find(
@@ -60,6 +67,7 @@ const HomePage = () => {
         setProfileData({
           name: cardName?.desc || "N/A name",
           description: cardDesc?.desc || "N/A desc",
+          bio: cardBio?.desc || "N/A bio",
           imageUrl: profileImage ? profileImage.url : null,
         });
 
@@ -98,21 +106,18 @@ const HomePage = () => {
                   7Catto!
                 </span>
               </h1>
+              <div className="text-xl leading-relaxed space-y-4 text-[#6f6f6f] mb-4">
+                <TrelloMarkdownRenderer content={profileData?.bio || "N/A"} />
+              </div>
 
               <div className="text-xl text-gray-600 leading-relaxed">
-                {profileData?.description ? (
-                  profileData.description
-                    .split("\n")
-                    .map(
-                      (line, index) => line.trim() && <p key={index}>{line}</p>
-                    )
-                ) : (
-                  <p>N/A</p>
-                )}
+                <TrelloMarkdownRenderer
+                  content={profileData?.description || "N/A"}
+                />
               </div>
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
-                <Link
+                {/* <Link
                   to="/gallery"
                   className="px-8 py-4 bg-window-500 text-white rounded-lg transition-all duration-300 hover:scale-105 shadow-lg font-bold hover:bg-[#FE5359]"
                 >
@@ -123,7 +128,7 @@ const HomePage = () => {
                   className="px-8 py-4 bg-white text-gray-800 rounded-lg hover:bg-gray-50 hover:scale-110 transition-all duration-300 border-2 border-gray-200 font-bold"
                 >
                   About Me
-                </Link>
+                </Link> */}
               </div>
             </div>
 
@@ -131,7 +136,7 @@ const HomePage = () => {
             <div className="relative group">
               <div className="relative bg-gradient-to-brp-8 transform rounded-2xl">
                 <div className="bg-white rounded-2xl p-6 min-h-96 flex items-center justify-center">
-                  <div className="text-center space-y-4">
+                  <div className="w-128 h-128 rounded-4xl overflow-hidden bg-gray-100 border-4 border-gray-200">
                     {profileData?.imageUrl ? (
                       <img
                         src={profileData.imageUrl}

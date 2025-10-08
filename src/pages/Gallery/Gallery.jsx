@@ -130,6 +130,15 @@ const Gallery = () => {
     <div className="min-h-screen bg-white">
       <MainLayout>
         <LoadingOverlay show={loading} />
+        {/* Page Header */}
+        <div className="text-center mb-10 mt-10">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+            Gallery
+          </h1>
+          <p className="text-xl text-gray-600">
+            Some featured arts!
+          </p>
+        </div>
 
         {/* Portfolio Grid */}
         <main className="container mx-auto px-6 py-12">
@@ -174,34 +183,12 @@ const Gallery = () => {
               ))}
             </div>
           )}
-          {/* <div className="flex flex-row justify-between space-y-8">
-            <p className="text-window-500">
-              See more on{" "}
-              <a
-                className="hover:text-gray-900 transition-colors duration-300 font-medium"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://x.com/SevenCat13"
-              >
-                Twitter
-              </a>
-              ,{" "}
-              <a
-                className="hover:text-gray-900 transition-colors duration-300 font-medium"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.facebook.com/7Cattoo"
-              >
-                Facebook
-              </a>
-            </p>
-          </div> */}
         </main>
 
         {/* Lightbox Modal */}
         {selectedImage && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4 cursor-zoom-out"
             onClick={closeLightbox}
             onContextMenu={(e) => e.preventDefault()}
           >
@@ -213,16 +200,17 @@ const Gallery = () => {
               ×
             </button>
             <div
-              className="max-w-6xl max-h-full relative"
+              className="max-w-6xl max-h-full relative cursor-zoom-out"
               onClick={(e) => e.stopPropagation()}
               onContextMenu={(e) => e.preventDefault()}
             >
               <img
                 src={selectedImage.url}
                 alt={selectedImage.name}
-                className="max-w-full max-h-[90vh] object-contain mx-auto pointer-events-none select-none"
+                className="max-w-full max-h-[80vh] cursor-zoom-out object-contain mx-auto select-none"
                 draggable="false"
                 onDragStart={handleDragStart}
+                onClick={closeLightbox}
                 onContextMenu={(e) => e.preventDefault()}
                 style={{
                   userSelect: "none",
@@ -234,7 +222,7 @@ const Gallery = () => {
                 }}
               />
               <div
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 pointer-events-none cursor-zoom-out"
                 onContextMenu={(e) => e.preventDefault()}
               />
               <div className="text-white text-center mt-6">

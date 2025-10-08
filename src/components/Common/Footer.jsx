@@ -38,20 +38,20 @@ const Footer = () => {
           </div>
 
           {/* Social Media Icons */}
-          <div className="flex items-center space-x-6">
+          {/* <div className="flex items-center space-x-6">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-5xl text-window-500 hover:text-[#FE5359] hover:scale-110 transition-all duration-300"
+                className="text-4xl text-window-500 hover:text-[#FE5359] hover:scale-110 transition-all duration-300"
                 aria-label={social.name}
               >
                 {social.icon}
               </a>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

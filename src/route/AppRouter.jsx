@@ -5,6 +5,7 @@ import AboutPage from "../pages/AboutPage/AboutPage";
 import Gallery from "../pages/Gallery/Gallery";
 import Commisson from "../pages/CommissionPage/CommissionPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
+import TermOfService from "../pages/TermOfService/TermOfService";
 
 const AppRouter = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const AppRouter = () => {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/gallery" element={<Gallery />} />
       <Route path="/commission" element={<Commisson />} />
+      <Route path="/tos" element={<TermOfService />} />
       <Route path="/contact" element={<ContactPage />} />
     </Routes>
   );
