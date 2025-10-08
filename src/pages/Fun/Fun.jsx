@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { viewAllCardsByBoardId, viewCardAttachments } from '../../api/trello-api';
 import MainLayout from "../../layouts/MainLayout";
 
-const TermOfService = () => {
+const Fun = () => {
   return (
     <div className="min-h-screen bg-white">
       <MainLayout>
@@ -14,4 +14,4 @@ const TermOfService = () => {
   );
 };
 
-export default TermOfService;
+export default Fun;

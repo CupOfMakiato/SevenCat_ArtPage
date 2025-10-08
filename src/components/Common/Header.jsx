@@ -3,6 +3,7 @@ import { HiMenu } from "react-icons/hi";
 import { BiSolidDownArrow } from "react-icons/bi";
 import HeaderLogo from "../../assets/cat-svgrepo-com.svg?react";
 import catSound from "../../assets/noisecreations_SFX-NCFREE02_MoaningCat.mp3";
+import meowSound from "../../assets/omori-meow.mp3";
 import clickSound from "../../assets/Mouse Click Sound Effect (128kbit_AAC).mp3"
 import { Howl } from "howler";
 
@@ -15,8 +16,8 @@ const Header = () => {
     const unlockAudio = () => {
       if (!soundRef.current && !audioUnlocked) {
         soundRef.current = new Howl({
-          src: [catSound],
-          volume: 0.3,
+          src: [meowSound],
+          volume: 1,
           html5: true,
           preload: true,
           onload: () => {
@@ -117,6 +118,12 @@ const Header = () => {
           >
             Contact
           </a>
+          <a
+            href="/fun"
+            className="hover:text-[#FE5359] hover:scale-110 transition-all duration-300"
+          >
+            Fun Stuff
+          </a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -183,6 +190,13 @@ const Header = () => {
             className="inline-block hover:text-[#FE5359] hover:scale-101 transition-all duration-300"
           >
             Contact
+          </a>
+          <a
+            href="/fun"
+            onClick={toggleMenu}
+            className="inline-block hover:text-[#FE5359] hover:scale-101 transition-all duration-300"
+          >
+            Fun Stuff
           </a>
         </div>
       </nav>

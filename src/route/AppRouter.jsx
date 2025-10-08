@@ -6,6 +6,7 @@ import Gallery from "../pages/Gallery/Gallery";
 import Commisson from "../pages/CommissionPage/CommissionPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import TermOfService from "../pages/TermOfService/TermOfService";
+import Fun from "../pages/Fun/Fun";
 
 const AppRouter = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const AppRouter = () => {
       <Route path="/commission" element={<Commisson />} />
       <Route path="/tos" element={<TermOfService />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/fun" element={<Fun />} />
     </Routes>
   );
 };

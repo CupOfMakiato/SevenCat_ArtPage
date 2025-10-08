@@ -142,8 +142,8 @@ const AboutPage = () => {
                     />
                     <a
                       href="/commission"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      // target="_blank"
+                      // rel="noopener noreferrer"
                       className="hover:text-[#FE5359] text-2xlsm hover:scale-110 transition-all duration-300 font-medium"
                     >
                       {" "}

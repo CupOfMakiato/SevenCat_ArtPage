@@ -110,7 +110,7 @@ const HomePage = () => {
                 <TrelloMarkdownRenderer content={profileData?.bio || "N/A"} />
               </div>
 
-              <div className="text-xl text-gray-600 leading-relaxed">
+              <div className="text-xl text-window-500 leading-relaxed">
                 <TrelloMarkdownRenderer
                   content={profileData?.description || "N/A"}
                 />
