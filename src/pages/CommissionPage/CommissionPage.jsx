@@ -7,13 +7,13 @@ import {
 } from "../../api/trello-api";
 import MainLayout from "../../layouts/MainLayout";
 import LoadingOverlay from "../../components/Common/LoadingOverlay";
-import TrelloMarkdownRenderer from "../../utils/TrelloMarkdownRenderer";
 
 const Commission = () => {
   const [commissionData, setCommissionData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showExamples, setShowExamples] = useState({});
 
   useEffect(() => {
     const fetchCommissionData = async () => {
@@ -63,7 +63,6 @@ const Commission = () => {
           })
         );
 
-        // Filter out cards with no images
         const validCommissions = commissionData.filter(
           (item) => item && item.images.length > 0
         );
@@ -79,7 +78,6 @@ const Commission = () => {
 
     fetchCommissionData();
 
-    // Disable right-click and keyboard shortcuts
     const handleContextMenu = (e) => {
       e.preventDefault();
       return false;
@@ -109,6 +107,13 @@ const Commission = () => {
     };
   }, []);
 
+  const toggleExamples = (commissionId) => {
+    setShowExamples((prev) => ({
+      ...prev,
+      [commissionId]: !prev[commissionId],
+    }));
+  };
+
   const openLightbox = (image, commission) => {
     setSelectedImage({
       ...image,
@@ -126,7 +131,6 @@ const Commission = () => {
     return false;
   };
 
-  // Parse pricing from description
   const parsePricing = (description) => {
     const parts = description.split(";").map((part) => part.trim());
     if (parts.length >= 3) {
@@ -167,50 +171,85 @@ const Commission = () => {
               Commission <span className="text-[#FE5359]">Information</span>
             </h1>
             <p className="text-xl text-gray-600">
-              You can scroll for the example commission arts here!
+              View pricing and examples of commissioned artwork
             </p>
           </div>
 
-          {/* Commission Sections */}
+          {/* Commission Pricing Table */}
           {commissionData.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-500 text-xl">Commission is empty</p>
             </div>
           ) : (
-            <div className="space-y-20">
+            <div className="space-y-12">
+              {/* Pricing Table */}
+              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
+                <table className="w-full bg-white">
+                  <thead className="bg-window-500">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-white font-bold text-lg">
+                        Commission Type
+                      </th>
+                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                        Price (VND)
+                      </th>
+                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                        Price (USD)
+                      </th>
+                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                        Examples
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {commissionData.map((commission, index) => {
+                      const pricing = parsePricing(commission.description);
+                      return (
+                        <tr
+                          key={commission.id}
+                          className={`${
+                            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                          } hover:bg-gray-100 transition-colors duration-200`}
+                        >
+                          <td className="px-6 py-4 font-semibold text-gray-900">
+                            {commission.name}
+                          </td>
+                          <td className="px-6 py-4 text-center text-gray-700 font-medium">
+                            {pricing ? pricing.vnd : "N/A"}
+                          </td>
+                          <td className="px-6 py-4 text-center text-gray-700 font-medium">
+                            {pricing ? pricing.usd : "N/A"}
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <button
+                              onClick={() => toggleExamples(commission.id)}
+                              className="bg-window-500 hover:bg-[#FE5359] text-white font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
+                            >
+                              {showExamples[commission.id]
+                                ? "Hide Examples"
+                                : "See Examples"}
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Image Grids */}
               {commissionData.map((commission) => {
-                const pricing = parsePricing(commission.description);
+                if (!showExamples[commission.id]) return null;
 
                 return (
-                  <div key={commission.id}>
-                    {/* Commission Header */}
-                    <div className="mb-8">
-                      <h2 className="text-4xl font-bold text-window-500 mb-4">
+                  <div
+                    key={`examples-${commission.id}`}
+                    className="animate-fadeIn"
+                  >
+                    <div className="mb-6">
+                      <h2 className="text-4xl font-bold text-window-500 mb-2">
                         {commission.name}
                       </h2>
-
-                      {/* Pricing Display */}
-                      {pricing && (
-                        <div className="inline-flex items-center gap-6 bg-gradient-to-r px-6 py-4 rounded-xl border-2 border-gray-200">
-                          <div>
-                            <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">
-                              VND
-                            </p>
-                            <p className="text-2xl font-bold text-window-500">
-                              {pricing.vnd}
-                            </p>
-                          </div>
-                          <div className="h-12 w-px bg-gray-300"></div>
-                          <div>
-                            <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">
-                              USD
-                            </p>
-                            <p className="text-2xl font-bold text-window-500">
-                              {pricing.usd}
-                            </p>
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Masonry Grid */}
@@ -240,7 +279,7 @@ const Commission = () => {
                               WebkitUserDrag: "none",
                             }}
                           />
-                          <div className="absolute inset-0   bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+                          <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
                         </div>
                       ))}
                     </div>

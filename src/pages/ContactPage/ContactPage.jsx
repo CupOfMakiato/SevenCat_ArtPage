@@ -18,19 +18,19 @@ const ContactPage = () => {
       url: "https://x.com/SevenCat13",
       icon: <BsTwitterX />,
     },
-    {
-      name: "Telegram",
-      url: "https://web.telegram.org/",
-      icon: <FaTelegram />,
-    },
+    // {
+    //   name: "Telegram",
+    //   url: "https://web.telegram.org/",
+    //   icon: <FaTelegram />,
+    // },
     {
       name: "Bluesky",
       url: "https://bsky.app/profile/7catto.bsky.social",
       icon: <SiBluesky />,
     },
     {
-      name: "Discord (Maintainence)",
-      url: "https://discordapp.com/users/7catto",
+      name: "Discord",
+      url: "https://discord.com/users/541445864158134272",
       icon: <FaDiscord />,
     },
   ];

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import LoadingOverlay from "../../components/Common/LoadingOverlay";
+import Draggable from "react-draggable";
 import {
   viewAllListsByBoardId,
   viewAllCardsByListId,
@@ -13,6 +14,7 @@ const AboutPage = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const nodeRef = useRef(null);
 
   useEffect(() => {
     const fetchAboutData = async () => {
@@ -35,7 +37,7 @@ const AboutPage = () => {
           throw new Error("No cards found in Profile list");
         }
 
-        const profileCard = cards[0]; //first card
+        const profileCard = cards[0];
         const profileCardName = cards[1];
         const profileCardDesc = cards[2];
         const profileCardBio = cards[3];
@@ -77,83 +79,91 @@ const AboutPage = () => {
 
   return (
     <MainLayout>
-      <div className="h-screen bg-white flex items-center justify-center py-20 px-6">
-        <div className="max-w-4xl w-full">
-          {/* Browser Window Card */}
-          <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-300">
-            {/* Browser Window  */}
-            <div className="bg-window-500 px-4 py-6 flex items-center gap-2 border-b border-gray-300 justify-between">
-              <p className="text-3xl md:text-1xl font-bold">About</p>
-              <button className="rounded-lg border border-transparent px-5 py-2.5 text-base font-medium font-inherit cursor-pointer transition-colors duration-[250ms]">
-                X
-              </button>
-            </div>
-
-            {/* Browser Content */}
-            <div className="p-12">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
-                {/* Profile Image */}
-                <div className="flex-shrink-0 group cursor-pointer">
-                  <div className="w-64 h-64 rounded-full overflow-hidden bg-gray-100 border-4 border-gray-200">
-                    {profileData?.imageUrl ? (
-                      <img
-                        src={profileData.imageUrl}
-                        alt={profileData.name}
-                        className="w-full h-full object-cover pointer-events-none select-none transition-transform duration-500 ease-in-out group-hover:scale-105"
-                        draggable="false"
-                        onContextMenu={(e) => e.preventDefault()}
-                        style={{
-                          userSelect: "none",
-                          WebkitUserSelect: "none",
-                          MozUserSelect: "none",
-                          msUserSelect: "none",
-                          WebkitTouchCallout: "none",
-                          WebkitUserDrag: "none",
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        No Image
-                      </div>
-                    )}
-                  </div>
+      <div className="h-screen bg-white py-20 px-6 flex items-center justify-center">
+        <div className="relative w-full h-full">
+          <Draggable
+            nodeRef={nodeRef}
+            handle=".drag-handle"
+            defaultPosition={{ x: 0, y: 0 }}
+          >
+            <div ref={nodeRef} className="max-w-4xl w-full mx-auto">
+              {/* Browser Window Card */}
+              <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-300">
+                {/* Browser Window Header */}
+                <div className="drag-handle bg-window-500 px-4 py-6 flex items-center gap-2 border-b border-gray-300 justify-between">
+                  <p className="text-3xl md:text-1xl font-bold select-none">
+                    About
+                  </p>
+                  <button className="rounded-lg border border-transparent px-5 py-2.5 text-base font-medium font-inherit cursor-pointer transition-colors duration-[250ms] hover:text-white">
+                    X
+                  </button>
                 </div>
 
-                {/* Profile Content */}
-                <div className="flex-1 text-center md:text-left">
-                  {/* Name */}
-                  <div className="text-5xl md:text-6xl font-bold text-[#FE5359] mb-4">
-                    <TrelloMarkdownRenderer
-                      content={profileData?.name || "N/A"}
-                    />
-                  </div>
+                {/* Browser Content */}
+                <div className="p-12">
+                  <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
+                    {/* Profile Image */}
+                    <div className="flex-shrink-0 group cursor-pointer">
+                      <div className="w-64 h-64 rounded-full overflow-hidden bg-gray-100 border-4 border-gray-200">
+                        {profileData?.imageUrl ? (
+                          <img
+                            src={profileData.imageUrl}
+                            alt={profileData.name}
+                            className="w-full h-full object-cover pointer-events-none select-none transition-transform duration-500 ease-in-out group-hover:scale-105"
+                            draggable="false"
+                            onContextMenu={(e) => e.preventDefault()}
+                            style={{
+                              userSelect: "none",
+                              WebkitUserSelect: "none",
+                              MozUserSelect: "none",
+                              msUserSelect: "none",
+                              WebkitTouchCallout: "none",
+                              WebkitUserDrag: "none",
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            No Image
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                  {/* Bio */}
-                  <div className="text-md leading-relaxed space-y-4 text-[#6f6f6f] mb-4">
-                    <TrelloMarkdownRenderer
-                      content={profileData?.bio || "N/A"}
-                    />
-                  </div>
+                    {/* Profile Content */}
+                    <div className="flex-1 text-center md:text-left">
+                      {/* Name */}
+                      <div className="text-5xl md:text-6xl font-bold text-[#FE5359] mb-4">
+                        <TrelloMarkdownRenderer
+                          content={profileData?.name || "N/A"}
+                        />
+                      </div>
 
-                  {/* Description */}
-                  <div className="text-window-500 text-lg leading-relaxed space-y-4">
-                    <TrelloMarkdownRenderer
-                      content={profileData?.description || "N/A"}
-                    />
-                    <a
-                      href="/commission"
-                      // target="_blank"
-                      // rel="noopener noreferrer"
-                      className="hover:text-[#FE5359] text-2xlsm hover:scale-110 transition-all duration-300 font-medium"
-                    >
-                      {" "}
-                      Commission.
-                    </a>
+                      {/* Bio */}
+                      <div className="text-md leading-relaxed space-y-4 text-[#6f6f6f] mb-4">
+                        <TrelloMarkdownRenderer
+                          content={profileData?.bio || "N/A"}
+                        />
+                      </div>
+
+                      {/* Description */}
+                      <div className="text-window-500 text-lg leading-relaxed space-y-4">
+                        <TrelloMarkdownRenderer
+                          content={profileData?.description || "N/A"}
+                        />
+                        <a
+                          href="/commission"
+                          className="hover:text-[#FE5359] text-2xlsm hover:scale-110 transition-all duration-300 font-medium"
+                        >
+                          {" "}
+                          Commission.
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Draggable>
         </div>
       </div>
     </MainLayout>
