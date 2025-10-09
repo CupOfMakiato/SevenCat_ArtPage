@@ -36,6 +36,7 @@ const Commission = () => {
     html5: true,
     preload: true,
   });
+  
   clickGeneralSoundRef.current = new Howl({
     src: [clickGeneralSound],
     volume: 0.4,
@@ -144,7 +145,6 @@ const Commission = () => {
       });
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("keydown", handleKeyDown);
-      // Add these two lines:
       if (clickSoundRef.current) clickSoundRef.current.unload();
       if (closeSoundRef.current) closeSoundRef.current.unload();
       if (clickGeneralSoundRef.current) clickGeneralSoundRef.current.unload();
@@ -176,7 +176,6 @@ const Commission = () => {
       closeSoundRef.current.play();
     }
   };
-
 
   const openLightbox = (image, commission) => {
     playClickSound();
@@ -247,32 +246,31 @@ const Commission = () => {
               <p className="text-gray-500 text-xl">Commission is empty</p>
             </div>
           ) : (
-            <div className="space-y-12">
-              {/* Pricing Table */}
-              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
-                <table className="w-full bg-white">
-                  <thead className="bg-window-500">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-white font-bold text-lg">
-                        Commission Type
-                      </th>
-                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
-                        Price (VND)
-                      </th>
-                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
-                        Price (USD)
-                      </th>
-                      <th className="px-6 py-4 text-center text-white font-bold text-lg">
-                        Examples
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {commissionData.map((commission, index) => {
-                      const pricing = parsePricing(commission.description);
-                      return (
+            <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
+              <table className="w-full bg-white">
+                <thead className="bg-window-500">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-white font-bold text-lg">
+                      Commission Type
+                    </th>
+                    <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                      Price (VND)
+                    </th>
+                    <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                      Price (USD)
+                    </th>
+                    <th className="px-6 py-4 text-center text-white font-bold text-lg">
+                      Examples
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commissionData.map((commission, index) => {
+                    const pricing = parsePricing(commission.description);
+                    return (
+                      <React.Fragment key={commission.id}>
+                        {/* Main Row */}
                         <tr
-                          key={commission.id}
                           className={`${
                             index % 2 === 0 ? "bg-gray-50" : "bg-white"
                           } hover:bg-gray-100 transition-colors duration-200`}
@@ -289,7 +287,7 @@ const Commission = () => {
                           <td className="px-6 py-4 text-center">
                             <button
                               onClick={() => toggleExamples(commission.id)}
-                              className="bg-window-500 hover:bg-[#FE5359] text-white font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
+                              className="bg-window-500 hover:bg-[#FE5359] text-white font-medium px-7 py-2 rounded-lg transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
                             >
                               {showExamples[commission.id]
                                 ? "Hide Examples"
@@ -297,61 +295,56 @@ const Commission = () => {
                             </button>
                           </td>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
 
-              {/* Image Grids */}
-              {commissionData.map((commission) => {
-                if (!showExamples[commission.id]) return null;
-
-                return (
-                  <div
-                    key={`examples-${commission.id}`}
-                    className="animate-fadeIn"
-                  >
-                    <div className="mb-6">
-                      <h2 className="text-4xl font-bold text-window-500 mb-2">
-                        {commission.name}
-                      </h2>
-                    </div>
-
-                    {/* Masonry Grid */}
-                    <div
-                      className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4"
-                      style={{ columnFill: "balance" }}
-                    >
-                      {commission.images.map((image) => (
-                        <div
-                          key={image.id}
-                          onClick={() => openLightbox(image, commission)}
-                          onDragStart={handleDragStart}
-                          className="group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden rounded-lg bg-gray-100 shadow-md hover:shadow-2xl transition-all duration-300"
-                        >
-                          <img
-                            src={image.url}
-                            alt={image.name}
-                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
-                            draggable="false"
-                            onContextMenu={(e) => e.preventDefault()}
-                            style={{
-                              userSelect: "none",
-                              WebkitUserSelect: "none",
-                              MozUserSelect: "none",
-                              msUserSelect: "none",
-                              WebkitTouchCallout: "none",
-                              WebkitUserDrag: "none",
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+                        {/* Expandable Row with Image Grid */}
+                        {showExamples[commission.id] && (
+                          <tr className="animate-fadeIn">
+                            <td colSpan="4" className="px-6 py-8 bg-gray-50">
+                              <div className="mb-4">
+                                <h3 className="text-2xl font-bold text-window-500">
+                                  {commission.name}
+                                </h3>
+                              </div>
+                              
+                              {/* Masonry Grid */}
+                              <div
+                                className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4"
+                                style={{ columnFill: "balance" }}
+                              >
+                                {commission.images.map((image) => (
+                                  <div
+                                    key={image.id}
+                                    onClick={() => openLightbox(image, commission)}
+                                    onDragStart={handleDragStart}
+                                    className="group relative mb-4 break-inside-avoid cursor-pointer overflow-hidden rounded-lg bg-gray-100 shadow-md hover:shadow-2xl transition-all duration-300"
+                                  >
+                                    <img
+                                      src={image.url}
+                                      alt={image.name}
+                                      className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                                      draggable="false"
+                                      onContextMenu={(e) => e.preventDefault()}
+                                      style={{
+                                        userSelect: "none",
+                                        WebkitUserSelect: "none",
+                                        MozUserSelect: "none",
+                                        msUserSelect: "none",
+                                        WebkitTouchCallout: "none",
+                                        WebkitUserDrag: "none",
+                                      }}
+                                    />
+                                    <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           )}
         </div>
@@ -366,7 +359,6 @@ const Commission = () => {
         >
           <button
             className="absolute top-6 right-6 rounded-lg border border-transparent px-5 py-2.5 font-medium font-inherit bg-[#141414] cursor-pointer transition-colors duration-[250ms] text-white text-2xl"
-            // onClick={closeLightbox}
             aria-label="Close"
           >
             ×
