@@ -36,18 +36,16 @@ const HomePage = () => {
           throw new Error("No cards found in Profile list");
         }
 
-        const profileCard = cards[0]; //first card
+        const profileCard = cards[0];
         const profileCardDesc = cards[1];
-        const profileCardBio =cards[2];
+        const profileCardBio = cards[2];
 
-        // Check if cards exist before accessing their properties
         if (!profileCard) {
           throw new Error("Profile card (index 0) not found");
         }
 
         const attachments = await viewCardAttachments(profileCard.id);
 
-        // Only fetch name and description if cards exist
         let cardName = null;
         let cardDesc = null;
         let cardBio = null;
@@ -94,49 +92,52 @@ const HomePage = () => {
     <div className="min-h-screen bg-gradient-to-br">
       <MainLayout>
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
-          <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
+        <section className="relative flex items-center justify-center px-4 sm:px-6 py-12 sm:py-16 md:py-20 min-h-[calc(100vh-4rem)] md:min-h-screen">
+          <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left Content */}
-            <div className="space-y-6 text-center md:text-left">
+            <div className="space-y-4 sm:space-y-6 text-center md:text-left order-2 md:order-1">
               <div className="inline-block"></div>
 
-              <h1 className="text-6xl md:text-7xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
                 Hi, I'm{" "}
                 <span className="text-[#FE5359] relative inline-block">
                   7Catto!
                 </span>
               </h1>
-              <div className="text-xl leading-relaxed space-y-4 text-[#6f6f6f] mb-4">
+              
+              <div className="text-base sm:text-lg md:text-xl leading-relaxed space-y-4 text-[#6f6f6f] mb-4">
                 <TrelloMarkdownRenderer content={profileData?.bio || "N/A"} />
               </div>
 
-              <div className="text-xl text-window-500 leading-relaxed">
+              <div className="text-base sm:text-lg md:text-xl text-window-500 leading-relaxed">
                 <TrelloMarkdownRenderer
                   content={profileData?.description || "N/A"}
                 />
               </div>
 
-              <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
-                {/* <Link
+              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-end pt-4">
+                {/* 
+                <Link
                   to="/gallery"
-                  className="px-8 py-4 bg-window-500 text-white rounded-lg transition-all duration-300 hover:scale-105 shadow-lg font-bold hover:bg-[#FE5359]"
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-window-500 text-white rounded-lg transition-all duration-300 hover:scale-105 shadow-lg font-bold hover:bg-[#FE5359]"
                 >
                   View Gallery
                 </Link>
                 <Link
                   to="/about"
-                  className="px-8 py-4 bg-white text-gray-800 rounded-lg hover:bg-gray-50 hover:scale-110 transition-all duration-300 border-2 border-gray-200 font-bold"
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white text-gray-800 rounded-lg hover:bg-gray-50 hover:scale-110 transition-all duration-300 border-2 border-gray-200 font-bold"
                 >
                   About Me
-                </Link> */}
+                </Link>
+                */}
               </div>
             </div>
 
             {/* Right Content - Featured Artwork Preview */}
-            <div className="relative group">
-              <div className="relative bg-gradient-to-brp-8 transform rounded-2xl">
-                <div className="bg-white rounded-2xl p-6 min-h-96 flex items-center justify-center">
-                  <div className="w-128 h-128 rounded-4xl overflow-hidden bg-gray-100 border-4 border-gray-200">
+            <div className="relative group order-1 md:order-2">
+              <div className="relative bg-gradient-to-br p-4 sm:p-6 md:p-8 transform rounded-2xl">
+                <div className="bg-white rounded-2xl p-4 sm:p-6 flex items-center justify-center">
+                  <div className="w-full max-w-md aspect-square rounded-2xl sm:rounded-3xl overflow-hidden bg-gray-100 border-2 sm:border-4 border-gray-200">
                     {profileData?.imageUrl ? (
                       <img
                         src={profileData.imageUrl}
@@ -154,7 +155,7 @@ const HomePage = () => {
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm sm:text-base">
                         No Image
                       </div>
                     )}

@@ -70,19 +70,28 @@ const Fun = () => {
 
   const playZzz2Sound = () => {
     if (zzz2SoundRef.current && audioReady) {
-      zzz2SoundRef.current.play();
+      // Check if sound is currently playing
+      if (!zzz2SoundRef.current.playing()) {
+        zzz2SoundRef.current.play();
+      }
     }
   };
 
   const playZzzSound = () => {
     if (zzzSoundRef.current && audioReady) {
-      zzzSoundRef.current.play();
+      // Check if sound is currently playing
+      if (!zzzSoundRef.current.playing()) {
+        zzzSoundRef.current.play();
+      }
     }
   };
 
   const playClickYRUGSound = () => {
     if (clickYRUGSoundRef.current && audioReady) {
-      clickYRUGSoundRef.current.play();
+      // Check if sound is currently playing
+      if (!clickYRUGSoundRef.current.playing()) {
+        clickYRUGSoundRef.current.play();
+      }
     }
   };
 
@@ -102,7 +111,7 @@ const Fun = () => {
                 }}
                 className="bg-window-500 hover:bg-[#FE5359] text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 hover:scale-110 shadow-lg text-xl"
               >
-                choose me!
+                ?!
               </button>
 
               <button
@@ -115,7 +124,7 @@ const Fun = () => {
                 }}
                 className="bg-window-500 hover:bg-[#FE5359] text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 hover:scale-110 shadow-lg text-xl"
               >
-                choose me!!
+                ?
               </button>
 
               <button
@@ -128,7 +137,7 @@ const Fun = () => {
                 }}
                 className="bg-window-500 hover:bg-[#FE5359] text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 hover:scale-110 shadow-lg text-xl"
               >
-                choose me!?@#?!@
+                !?@#?!@
               </button>
             </>
           )}
