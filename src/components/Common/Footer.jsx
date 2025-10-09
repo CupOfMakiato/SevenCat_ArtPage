@@ -1,6 +1,7 @@
 import React from "react";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebookSquare } from "react-icons/fa";
+import giffy from "../../assets/giffy.gif"
 
 const Footer = () => {
   const socialLinks = [
@@ -37,20 +38,16 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Social Media Icons */}
-          {/* <div className="flex items-center space-x-6">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-4xl text-window-500 hover:text-[#FE5359] hover:scale-110 transition-all duration-300"
-                aria-label={social.name}
-              >
-                {social.icon}
-              </a>
-            ))}
+          {/* GIF with Tooltip */}
+          {/* <div className="flex items-center space-x-6 relative group">
+            <img 
+              src={giffy} 
+              alt="Animated GIF" 
+              className="h-16 w-auto object-contain cursor-pointer"
+            />
+            <span className="absolute bottom-full hidden group-hover:block bg-gray-800 text-white text-sm px-3 py-1 rounded whitespace-nowrap">
+              art by neonbaka
+            </span>
           </div> */}
         </div>
       </div>

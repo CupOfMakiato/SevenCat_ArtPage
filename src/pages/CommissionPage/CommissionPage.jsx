@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   viewAllListsByBoardId,
   viewAllCardsByListId,
@@ -7,6 +7,10 @@ import {
 } from "../../api/trello-api";
 import MainLayout from "../../layouts/MainLayout";
 import LoadingOverlay from "../../components/Common/LoadingOverlay";
+import closeSound from "../../assets/click_close.mp3";
+import clickSound from "../../assets/collapsible_open.mp3";
+import clickGeneralSound from "../../assets/click_general.mp3";
+import { Howl } from "howler";
 
 const Commission = () => {
   const [commissionData, setCommissionData] = useState([]);
@@ -14,6 +18,39 @@ const Commission = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showExamples, setShowExamples] = useState({});
+  const clickSoundRef = useRef(null);
+  const closeSoundRef = useRef(null);
+  const clickGeneralSoundRef = useRef(null);
+  const [audioReady, setAudioReady] = useState(false);
+
+  clickSoundRef.current = new Howl({
+    src: [clickSound],
+    volume: 0.4,
+    html5: true,
+    preload: true,
+  });
+
+  closeSoundRef.current = new Howl({
+    src: [closeSound],
+    volume: 0.4,
+    html5: true,
+    preload: true,
+  });
+  clickGeneralSoundRef.current = new Howl({
+    src: [clickGeneralSound],
+    volume: 0.4,
+    html5: true,
+    preload: true,
+  });
+
+  const markAudioReady = () => {
+    setAudioReady(true);
+  };
+
+  const events = ["click", "touchstart", "keydown"];
+  events.forEach((event) => {
+    document.addEventListener(event, markAudioReady, { once: true });
+  });
 
   useEffect(() => {
     const fetchCommissionData = async () => {
@@ -102,19 +139,47 @@ const Commission = () => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, markAudioReady);
+      });
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("keydown", handleKeyDown);
+      // Add these two lines:
+      if (clickSoundRef.current) clickSoundRef.current.unload();
+      if (closeSoundRef.current) closeSoundRef.current.unload();
+      if (clickGeneralSoundRef.current) clickGeneralSoundRef.current.unload();
     };
   }, []);
 
+  const playClickGeneralSound = () => {
+    if (clickGeneralSoundRef.current && audioReady) {
+      clickGeneralSoundRef.current.play();
+    }
+  };
+
   const toggleExamples = (commissionId) => {
+    playClickGeneralSound();
     setShowExamples((prev) => ({
       ...prev,
       [commissionId]: !prev[commissionId],
     }));
   };
 
+  const playClickSound = () => {
+    if (clickSoundRef.current && audioReady) {
+      clickSoundRef.current.play();
+    }
+  };
+
+  const playCloseSound = () => {
+    if (closeSoundRef.current && audioReady) {
+      closeSoundRef.current.play();
+    }
+  };
+
+
   const openLightbox = (image, commission) => {
+    playClickSound();
     setSelectedImage({
       ...image,
       commissionName: commission.name,
@@ -123,6 +188,7 @@ const Commission = () => {
   };
 
   const closeLightbox = () => {
+    playCloseSound();
     setSelectedImage(null);
   };
 
@@ -300,7 +366,7 @@ const Commission = () => {
         >
           <button
             className="absolute top-6 right-6 rounded-lg border border-transparent px-5 py-2.5 font-medium font-inherit bg-[#141414] cursor-pointer transition-colors duration-[250ms] text-white text-2xl"
-            onClick={closeLightbox}
+            // onClick={closeLightbox}
             aria-label="Close"
           >
             ×

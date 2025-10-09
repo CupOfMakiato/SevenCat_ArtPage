@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   viewAllListsByBoardId,
   viewAllCardsByListId,
@@ -6,12 +6,41 @@ import {
 } from "../../api/trello-api";
 import MainLayout from "../../layouts/MainLayout";
 import LoadingOverlay from "../../components/Common/LoadingOverlay";
+import closeSound from "../../assets/click_close.mp3";
+import clickSound from "../../assets/collapsible_open.mp3";
+import { Howl } from "howler";
 
 const Gallery = () => {
   const [portfolioItems, setPortfolioItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const clickSoundRef = useRef(null);
+  const closeSoundRef = useRef(null);
+  const [audioReady, setAudioReady] = useState(false);
+
+  clickSoundRef.current = new Howl({
+    src: [clickSound],
+    volume: 0.4,
+    html5: true,
+    preload: true,
+  });
+
+  closeSoundRef.current = new Howl({
+    src: [closeSound],
+    volume: 0.4,
+    html5: true,
+    preload: true,
+  });
+
+  const markAudioReady = () => {
+    setAudioReady(true);
+  };
+
+  const events = ["click", "touchstart", "keydown"];
+  events.forEach((event) => {
+    document.addEventListener(event, markAudioReady, { once: true });
+  });
 
   useEffect(() => {
     const fetchPortfolioData = async () => {
@@ -108,16 +137,36 @@ const Gallery = () => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, markAudioReady);
+      });
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("keydown", handleKeyDown);
+      // Add these two lines:
+      if (clickSoundRef.current) clickSoundRef.current.unload();
+      if (closeSoundRef.current) closeSoundRef.current.unload();
     };
   }, []);
 
+  const playClickSound = () => {
+    if (clickSoundRef.current && audioReady) {
+      clickSoundRef.current.play();
+    }
+  };
+
+  const playCloseSound = () => {
+    if (closeSoundRef.current && audioReady) {
+      closeSoundRef.current.play();
+    }
+  };
+
   const openLightbox = (image) => {
+    playClickSound();
     setSelectedImage(image);
   };
 
   const closeLightbox = () => {
+    playCloseSound();
     setSelectedImage(null);
   };
 
@@ -135,9 +184,7 @@ const Gallery = () => {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
             Gallery
           </h1>
-          <p className="text-xl text-gray-600">
-            Some featured arts!
-          </p>
+          <p className="text-xl text-gray-600">Some featured arts!</p>
         </div>
 
         {/* Portfolio Grid */}
@@ -194,7 +241,7 @@ const Gallery = () => {
           >
             <button
               className="absolute top-6 right-6 rounded-lg border border-transparent px-5 py-2.5 text-base font-medium font-inherit bg-[#141414] cursor-pointer transition-colors duration-[250ms]"
-              onClick={closeLightbox}
+              // onClick={closeLightbox}
               aria-label="Close"
             >
               ×

@@ -1,9 +1,13 @@
 import Markdown from 'markdown-to-jsx';
 
+
+
 export default function TrelloMarkdownRenderer({ content, className = '' }) {
   const processedContent = content
     ? content.replace(/\n/g, '  \n') // Single line break support
     : '';
+
+    
 
   return (
     <Markdown
@@ -32,7 +36,7 @@ export default function TrelloMarkdownRenderer({ content, className = '' }) {
           // Links
           a: {
             props: {
-              className: 'hover:text-[#FE5359] transition-colors duration-300 underline',
+              className: 'hover:text-[#FE5359] transition-colors duration-300',
               target: '_blank',
               rel: 'noopener noreferrer',
             },

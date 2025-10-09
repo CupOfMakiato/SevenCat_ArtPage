@@ -2,22 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/seven-closed-svgrepo-com.svg" />
+    <link rel="icon" type="image/svg+xml" href="/cat-svgrepo-com.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery - Portfolio</title>
     
-    <!-- Prevent image caching for better protection -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     
     <style>
-      /* Hide root content by default until JavaScript loads */
       #root {
         display: none;
       }
       
-      /* NoScript overlay - shown when JavaScript is disabled */
       .noscript-overlay {
         position: fixed;
         top: 0;
@@ -119,7 +116,6 @@
     </style>
   </head>
   <body>
-    <!-- This overlay shows ONLY when JavaScript is disabled -->
     <noscript>
       <div class="noscript-overlay">
         <div class="noscript-content">
@@ -132,10 +128,8 @@
       </div>
     </noscript>
 
-    <!-- React app container -->
     <div id="root"></div>
     
-    <!-- Enable root display when JavaScript is active -->
     <script>
       // Show the app container
       document.getElementById('root').style.display = 'block';
@@ -148,9 +142,8 @@
       
       // Disable common keyboard shortcuts
       document.addEventListener('keydown', function(e) {
-        // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (DevTools)
         if (
-          e.key === 'F12' || 
+           e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
             (e.ctrlKey && e.key === 'u') || // View Source
             (e.ctrlKey && e.key === 's')) { 
