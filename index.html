@@ -11,9 +11,9 @@
     <meta http-equiv="Expires" content="0" />
     
     <style>
-      #root {
+      /* #root {
         display: none;
-      }
+      } */
       
       .noscript-overlay {
         position: fixed;
@@ -129,37 +129,6 @@
     </noscript>
 
     <div id="root"></div>
-    
-    <script>
-      // Show the app container
-      document.getElementById('root').style.display = 'block';
-      
-      // Disable right-click globally
-      document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-      });
-      
-      // Disable common keyboard shortcuts
-      document.addEventListener('keydown', function(e) {
-        if (
-           e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
-            (e.ctrlKey && e.key === 'u') || // View Source
-            (e.ctrlKey && e.key === 's')) { 
-          e.preventDefault();
-          return false;
-        }
-      });
-      
-      // Disable drag on all images
-      document.addEventListener('dragstart', function(e) {
-        if (e.target.tagName === 'IMG') {
-          e.preventDefault();
-          return false;
-        }
-      });
-    </script>
     
     <!-- Vite/React entry point -->
     <script type="module" src="/src/main.jsx"></script>

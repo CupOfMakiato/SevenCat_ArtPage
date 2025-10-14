@@ -2,6 +2,7 @@ import React from "react";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebookSquare } from "react-icons/fa";
 import giffy from "../../assets/giffy.gif"
+import icecoffee from "../../assets/icecoffee.gif"
 
 const Footer = () => {
   const socialLinks = [
@@ -37,11 +38,9 @@ const Footer = () => {
               </a>
             </p>
           </div>
-
-          {/* GIF with Tooltip */}
           {/* <div className="flex items-center space-x-6 relative group">
             <img 
-              src={giffy} 
+              src={icecoffee} 
               alt="Animated GIF" 
               className="h-16 w-auto object-contain cursor-pointer"
             />
